@@ -12,5 +12,5 @@ defmodule Flightex do
   end
 
   defdelegate create_or_update_user(params), to: CreateOrUpdateUser, as: :call
-  defdelegate create_or_update_order(params), to: CreateOrUpdateBooking, as: :call
+  defdelegate create_or_update_booking(params), to: CreateOrUpdateBooking, as: :call
 end
