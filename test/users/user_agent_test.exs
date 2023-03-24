@@ -22,9 +22,16 @@ defmodule Flightex.Users.AgentTest do
 
       response = UserAgent.get(cpf)
 
-
       expected_response =
         {:ok, %Flightex.Users.User{cpf: cpf, email: "jp@banana.com", id: id, name: "Jp"}}
+
+      assert response == expected_response
+    end
+
+    test "when the user is invalid, returns an error" do
+      response = UserAgent.save(%{invalidProperties: "invalid"})
+
+      expected_response = {:error, "Invalid user"}
 
       assert response == expected_response
     end

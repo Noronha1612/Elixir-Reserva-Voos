@@ -22,6 +22,14 @@ defmodule Flightex.Bookings.AgentTest do
 
       assert response == {:ok, uuid}
     end
+
+    test "when the booking is invalid, returns an error" do
+      response = BookingsAgent.save(%{invalidProperties: "invalid"})
+
+      expected_response = {:error, "Invalid booking"}
+
+      assert response == expected_response
+    end
   end
 
   describe "get/1" do
@@ -57,6 +65,27 @@ defmodule Flightex.Bookings.AgentTest do
       response = BookingsAgent.get("banana")
 
       expected_response = {:error, "Booking not found"}
+
+      assert response == expected_response
+    end
+  end
+
+  describe "list_all/1" do
+    setup do
+      BookingsAgent.start_link(%{})
+
+      {:ok, id: UUID.uuid4()}
+    end
+
+    test "should list all bookings in the agent", %{id: id} do
+      booking = build(:booking, id: id)
+      {:ok, uuid} = BookingsAgent.save(booking)
+
+      response = BookingsAgent.list_all()
+
+      expected_response = %{
+        id => booking
+      }
 
       assert response == expected_response
     end

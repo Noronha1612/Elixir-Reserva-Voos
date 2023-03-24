@@ -12,6 +12,4 @@ defmodule Flightex.Bookings.CreateOrUpdate do
 
     BookingAgent.save(booking)
   end
-
-  def call(_booking), do: {:error, "Invalid booking"}
 end
